@@ -1,5 +1,5 @@
 import './App.css'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { FormularioCRM } from './componentes/FormularioCRM'
 import { ListaCards } from './componentes/ListaCards'
 
@@ -7,12 +7,16 @@ function App() {
   
   const [salario, setSalario] = useState(10000);
   const [cards, setCards] = useState([]);
+  const [tipoSelecionado, setTipoSelecionado] = useState('');
+  const inputRef = useRef(null);
+
+  function handleClick() {
+    inputRef.current.focus();
+}
 
   function addCards (card) {
     setCards([...cards, card]);
   }
-
-  console.log('Cards criados:', cards);
   
   const vagas = [
     {
@@ -26,6 +30,14 @@ function App() {
     {
       nome: 'Desenvolvedor Full Stack',
       id: 3
+    },
+    {
+      nome: 'Analista de QA',
+      id: 4
+    },
+    {
+      nome: 'Analista de DevOps',
+      id: 5
     }
   ];
 
@@ -41,6 +53,14 @@ function App() {
     {
       nome: 'Sênior',
       id: 3
+    },
+    {
+      nome: 'Especialista',
+      id: 4
+    },
+    {
+      nome: 'Tech Lead',
+      id: 5
     }
   ];
 
@@ -59,6 +79,56 @@ function App() {
     }
   ];
 
+  const dias = [
+    {
+      nome: '1 dia',
+      id: 1
+    },
+    {
+      nome: '2 dias',
+      id: 2
+    },
+    {
+      nome: '3 dias',
+      id: 3
+    },
+    {
+      nome: '4 dias',
+      id: 4
+    },
+    {
+      nome: '5 dias',
+      id: 5
+    }
+  ];
+
+  const etapa = [
+    {
+      nome: 'Análise de currículo',
+      id: 1
+    },
+    {
+      nome: 'Entrevista com RH',
+      id: 2
+    },
+    {
+      nome: 'Entrevista técnica',
+      id: 3
+    },
+    {
+      nome: 'Aguardando resposta',
+      id: 4
+    },
+    {
+      nome: 'Rejeitado',
+      id: 5
+    },
+    {
+      nome: 'Aprovado',
+      id: 6
+    }
+  ];
+
   return (
     <main>
       <FormularioCRM
@@ -68,6 +138,12 @@ function App() {
         salario={salario}
         setSalario={setSalario}
         addCards={addCards}
+        dias={dias}
+        etapa={etapa}
+        tipoSelecionado={tipoSelecionado}
+        setTipoSelecionado={setTipoSelecionado}
+        handleClick={handleClick}
+        inputRef={inputRef}
       />
       <ListaCards cards={cards} />
     </main>

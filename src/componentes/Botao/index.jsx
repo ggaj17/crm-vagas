@@ -1,7 +1,7 @@
 import './botao.estilo.css'
 
-export function Botao ({ children }) {
+export function Botao ({ children, onClick }) {
   return (
-    <button>{children}</button>
+    <button onClick={onClick}>{children}</button>
   )
 }
