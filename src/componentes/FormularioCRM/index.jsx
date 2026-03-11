@@ -7,7 +7,7 @@ import { Botao } from '../Botao'
 import { ListaSuspensa } from '../ListaSuspensa';
 import './formulario-crm.estilo.css'
 
-export function FormularioCRM ({vagas, senoridade, tipo, salario, setSalario, addCards, dias, etapa, tipoSelecionado, setTipoSelecionado, handleClick, inputRef}) {
+export function FormularioCRM ({vagas, senoridade, tipo, salario, setSalario, addCards, dias, etapa, tipoSelecionado, setTipoSelecionado, handleClick, inputRef,}) {
 
  function aoFormularioSubmetido (formData) {
   //formData é o valor padrão do formulario ao ser submetido.

@@ -1,6 +1,6 @@
 import './App.css'
 import { useState, useRef } from 'react'
-import { FormularioCRM } from './componentes/FormularioCRM'
+import { Dialog } from "./componentes/Dialog";
 import { ListaCards } from './componentes/ListaCards'
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
   const [cards, setCards] = useState([]);
   const [tipoSelecionado, setTipoSelecionado] = useState('');
   const inputRef = useRef(null);
+  const [fecharDialog, setFecharDialog] = useState(false);
 
   function handleClick() {
     inputRef.current.focus();
@@ -16,6 +17,7 @@ function App() {
 
   function addCards (card) {
     setCards([...cards, card]);
+    setFecharDialog(true);
   }
   
   const vagas = [
@@ -131,21 +133,26 @@ function App() {
 
   return (
     <main>
-      <FormularioCRM
-        vagas={vagas}
-        senoridade={senoridade}
-        tipo={tipo}
-        salario={salario}
-        setSalario={setSalario}
-        addCards={addCards}
-        dias={dias}
-        etapa={etapa}
-        tipoSelecionado={tipoSelecionado}
-        setTipoSelecionado={setTipoSelecionado}
-        handleClick={handleClick}
-        inputRef={inputRef}
-      />
-      <ListaCards cards={cards} />
+      <div className='titulo'>
+      <span className='titulo-projeto'>Projeto CRM Vagas</span>
+        <Dialog
+          vagas={vagas}
+          senoridade={senoridade}
+          tipo={tipo}
+          salario={salario}
+          setSalario={setSalario}
+          addCards={addCards}
+          dias={dias}
+          etapa={etapa}
+          tipoSelecionado={tipoSelecionado}
+          setTipoSelecionado={setTipoSelecionado}
+          handleClick={handleClick}
+          inputRef={inputRef}
+          cards={cards} 
+          fecharDialog={fecharDialog}>
+          </Dialog>
+        </div>
+        <ListaCards cards={cards} />
     </main>
   )
 }
