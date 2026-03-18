@@ -2,6 +2,7 @@ import './App.css'
 import { useState, useRef } from 'react'
 import { Dialog } from "./componentes/Dialog";
 import { ListaCards } from './componentes/ListaCards'
+import { FormularioCRM } from './componentes/FormularioCRM'
 
 function App() {
   
@@ -136,20 +137,21 @@ function App() {
       <div className='titulo'>
       <span className='titulo-projeto'>Projeto CRM Vagas</span>
         <Dialog
-          vagas={vagas}
-          senoridade={senoridade}
-          tipo={tipo}
-          salario={salario}
-          setSalario={setSalario}
-          addCards={addCards}
-          dias={dias}
-          etapa={etapa}
-          tipoSelecionado={tipoSelecionado}
-          setTipoSelecionado={setTipoSelecionado}
-          handleClick={handleClick}
-          inputRef={inputRef}
-          cards={cards} 
           fecharDialog={fecharDialog}>
+            <FormularioCRM
+                    vagas={vagas}
+                    senoridade={senoridade}
+                    tipo={tipo}
+                    salario={salario}
+                    setSalario={setSalario}
+                    addCards={addCards}
+                    dias={dias}
+                    etapa={etapa}
+                    tipoSelecionado={tipoSelecionado}
+                    setTipoSelecionado={setTipoSelecionado}
+                    handleClick={handleClick}
+                    inputRef={inputRef}
+                />
           </Dialog>
         </div>
         <ListaCards cards={cards} />
