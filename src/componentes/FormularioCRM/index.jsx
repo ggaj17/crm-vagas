@@ -1,4 +1,3 @@
-import CurrencyInput from 'react-currency-input-field';
 import { CampoFormulario } from '../CampoFormulario'
 import { Label } from '../Label'
 import { Titulo } from '../Titulo'
@@ -7,31 +6,7 @@ import { Botao } from '../Botao'
 import { ListaSuspensa } from '../ListaSuspensa';
 import './formulario-crm.estilo.css'
 
-export function FormularioCRM ({vagas, senoridade, tipo, salario, setSalario, addCards, dias, etapa, tipoSelecionado, setTipoSelecionado, handleClick, inputRef,}) {
-
- function aoFormularioSubmetido (formData) {
-  //formData é o valor padrão do formulario ao ser submetido.
-  //Deixei da forma mais verbosa e também reduzida de selecionar um objeto com o select para ter as duas opcoes como exemplos posteriores. O ideal nesse caso sempre será pelo ID!! TROCAR!!! Elevar o estado do card tambem
-    const card = {
-      nome: formData.get('nome'),
-      empresa: formData.get('empresa'),
-      vaga: vagas.find(function(vaga) {
-        return vaga.nome === formData.get('vaga') //mais verbosa
-        }
-      ),
-      senoridade: senoridade.find(function(senioridadeItem) {
-        return senioridadeItem.nome === formData.get('senoridade') //mais verbosa
-      }),
-      tipo: tipo.find(t => t.nome === formData.get('tipo')), //menos verbosa
-      dias: dias.find(d => d.nome === formData.get('dias')),
-      etapa: etapa.find(e => e.nome === formData.get('etapa')),
-      salario: salario,
-      data_criacao_card: new Date().toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'}),
-        deadline: formData.get('data').split('-').reverse().join('/') // forma interessante de transformar a data do formato yyyy-mm-dd para dd/mm/yyyy
-    }
-    
-    addCards(card);
- }
+export function FormularioCRM ({vagas, senoridade, tipo, salario, setSalario, dias, etapa, tipoSelecionado, setTipoSelecionado, aoFormularioSubmetido}) {
 
   return (
     <form action={aoFormularioSubmetido} className='form-crm'>
@@ -40,7 +15,7 @@ export function FormularioCRM ({vagas, senoridade, tipo, salario, setSalario, ad
         <div className='container-form'>
             <div className='itens-form'>
                 <Label htmlFor="nome">Qual é o nome da vaga?</Label>
-                <CampoEntrada type="text" id='nome'name='nome' placeholder='Adicione a vaga' ref={inputRef}/>
+                <CampoEntrada type="text" id='nome'name='nome' placeholder='Adicione a vaga'/>
             </div>
             <div className='itens-form'>
                 <Label htmlFor="empresa">Qual é o nome da empresa?</Label>
@@ -60,15 +35,7 @@ export function FormularioCRM ({vagas, senoridade, tipo, salario, setSalario, ad
             </div>}
             <div className='itens-form'>
                 <Label htmlFor="salario">Qual é o salário da vaga?</Label>
-                <CurrencyInput
-                    className='campo-dinehiro'
-                    value={salario}
-                    onValueChange={(value) => setSalario(value || 0)}
-                    prefix="R$ "
-                    decimalSeparator=","
-                    groupSeparator="."
-                    decimalsLimit={2}
-                />
+                <CampoEntrada type="text" id='salario'name='salario'  placeholder='10.000,00'/>
             </div>
             <div className='itens-form'>
                 <Label htmlFor="data">Qual a deadline da vaga?</Label>
@@ -77,7 +44,7 @@ export function FormularioCRM ({vagas, senoridade, tipo, salario, setSalario, ad
             <div className='itens-form'>
                 <ListaSuspensa label='Está em qual etapa da vaga?' itens={etapa} name='etapa'/>
             </div>
-            <Botao onClick={handleClick}>Adicionar Vaga</Botao>
+            <Botao>Adicionar Vaga</Botao>
         </div>
         </CampoFormulario>
     </form>

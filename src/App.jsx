@@ -1,25 +1,42 @@
 import './App.css'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Dialog } from "./componentes/Dialog";
 import { ListaCards } from './componentes/ListaCards'
 import { FormularioCRM } from './componentes/FormularioCRM'
 
 function App() {
   
-  const [salario, setSalario] = useState(10000);
   const [cards, setCards] = useState([]);
   const [tipoSelecionado, setTipoSelecionado] = useState('');
-  const inputRef = useRef(null);
   const [fecharDialog, setFecharDialog] = useState(false);
-
-  function handleClick() {
-    inputRef.current.focus();
-}
 
   function addCards (card) {
     setCards([...cards, card]);
-    setFecharDialog(true);
   }
+
+  function aoFormularioSubmetido (formData) {
+    //formData é o valor padrão do formulario ao ser submetido.
+    //Deixei da forma mais verbosa e também reduzida de selecionar um objeto com o select para ter as duas opcoes como exemplos posteriores. O ideal nesse caso sempre será pelo ID!! TROCAR!!! Elevar o estado do card tambem
+      const card = {
+        nome: formData.get('nome') || 'Sem nome da vaga definida',
+        empresa: formData.get('empresa') || 'Sem empresa definida',
+        vaga: vagas.find(function(vaga) {
+          return vaga.nome === formData.get('vaga')
+          }) || {},
+        senoridade: senoridade.find(function(senioridadeItem) {
+          return senioridadeItem.nome === formData.get('senoridade') //mais verbosa
+        }) || {},
+        tipo: tipo.find(t => t.nome === formData.get('tipo')) || {}, //menos verbosa
+        dias: dias.find(d => d.nome === formData.get('dias')) || {},
+        etapa: etapa.find(e => e.nome === formData.get('etapa')) || {},
+        salario: formData.get('salario') || '00,00',
+        data_criacao_card: new Date().toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'}),
+          deadline: formData.get('data').split('-').reverse().join('/') || '31/12/2026'// forma interessante de transformar a data do formato yyyy-mm-dd para dd/mm/yyyy
+      }
+      
+      addCards(card);
+      setFecharDialog(true);
+   }
   
   const vagas = [
     {
@@ -142,15 +159,11 @@ function App() {
                     vagas={vagas}
                     senoridade={senoridade}
                     tipo={tipo}
-                    salario={salario}
-                    setSalario={setSalario}
-                    addCards={addCards}
                     dias={dias}
                     etapa={etapa}
                     tipoSelecionado={tipoSelecionado}
                     setTipoSelecionado={setTipoSelecionado}
-                    handleClick={handleClick}
-                    inputRef={inputRef}
+                    aoFormularioSubmetido={aoFormularioSubmetido}
                 />
           </Dialog>
         </div>

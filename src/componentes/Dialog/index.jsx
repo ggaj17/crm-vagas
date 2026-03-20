@@ -7,9 +7,10 @@ export function Dialog({children, fecharDialog}) {
    const openDialog = () => dialogRef.current.showModal();
    const closeDialog = () =>  dialogRef.current.close();
 
-   if (fecharDialog) {
-    closeDialog();
-   }
+
+     if (fecharDialog) {
+       closeDialog();
+     }
 
     return (
         <>
