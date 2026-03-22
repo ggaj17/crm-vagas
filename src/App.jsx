@@ -1,5 +1,5 @@
 import './App.css'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Dialog } from "./componentes/Dialog";
 import { ListaCards } from './componentes/ListaCards'
 import { FormularioCRM } from './componentes/FormularioCRM'
@@ -8,18 +8,29 @@ function App() {
   
   const [cards, setCards] = useState([]);
   const [tipoSelecionado, setTipoSelecionado] = useState('');
-  const [fecharDialog, setFecharDialog] = useState(false);
+  const dialogAddRef = useRef(null);
+  const dialogEditRef = useRef(null);
+  const idRef = useRef(1); //Gerador de IDS apenas enquanto não tiver backend
+
+  console.log(cards)
 
   function addCards (card) {
     setCards([...cards, card]);
+    idRef.current ++
+  }
+
+  const excluirCard = (id) => {
+    const novosCards = cards.filter(card => card.id !== id);
+    setCards(novosCards);
   }
 
   function aoFormularioSubmetido (formData) {
     //formData é o valor padrão do formulario ao ser submetido.
     //Deixei da forma mais verbosa e também reduzida de selecionar um objeto com o select para ter as duas opcoes como exemplos posteriores. O ideal nesse caso sempre será pelo ID!! TROCAR!!! Elevar o estado do card tambem
       const card = {
-        nome: formData.get('nome') || 'Sem nome da vaga definida',
-        empresa: formData.get('empresa') || 'Sem empresa definida',
+        id: idRef.current,
+        nome: formData.get('nome') || 'Nome Indefinido',
+        empresa: formData.get('empresa') || 'Empresa Indefinida',
         vaga: vagas.find(function(vaga) {
           return vaga.nome === formData.get('vaga')
           }) || {},
@@ -35,7 +46,7 @@ function App() {
       }
       
       addCards(card);
-      setFecharDialog(true);
+      dialogAddRef.current?.fechar();
    }
   
   const vagas = [
@@ -154,7 +165,8 @@ function App() {
       <div className='titulo'>
       <span className='titulo-projeto'>Projeto CRM Vagas</span>
         <Dialog
-          fecharDialog={fecharDialog}>
+          ref={dialogAddRef}
+          titulo={'Adicionar Cards'}>
             <FormularioCRM
                     vagas={vagas}
                     senoridade={senoridade}
@@ -167,7 +179,7 @@ function App() {
                 />
           </Dialog>
         </div>
-        <ListaCards cards={cards} />
+        <ListaCards cards={cards} excluirCard={excluirCard} ref={dialogEditRef}/>
     </main>
   )
 }

@@ -9,11 +9,34 @@
   padding-bottom: 20px;
 }
 
-.container-cards h2 {
+.header-cards {
+  display: flex;
   align-self: center;
+  justify-content: space-around;
+  gap: 40px;
+  margin: 20px 10px;
 }
 
 .container-cards p {
   margin-bottom: 5px;
   margin-left: 30px;
+}
+
+.container-botoes {
+  display: flex;
+  gap: 10px;
+  margin-right: 20px;
+  padding-bottom: 10px;
+  
+}
+
+.botao-excluir {
+  max-height: 41px;
+  background-color: rgb(157, 5, 5);
+}
+
+.titulo-cards {
+  font-size: 24px;
+  font-weight: 700;
+  width:270px;
 }

@@ -1,12 +1,27 @@
- import './lista-cards.estilos.css';
+import './lista-cards.estilos.css';
+import { Trash2 } from "lucide-react";
+import { Dialog } from "../Dialog";
+import { FormularioEditarCard } from "../FormularioEditarCard";
 
-export function ListaCards ({cards}) {
+export function ListaCards ({cards, ref, excluirCard}) {
+
   return (
  
     <section>
         {cards.map((card, index) => (
             <div className='container-cards' key={index}>
-              <h2>{card.nome}</h2>
+              <div className='header-cards'>
+                <span className='titulo-cards'>{card.nome}</span>
+                <div className='container-botoes'>
+                  <Dialog
+                    ref={ref}
+                    titulo={'Editar'} >
+                      <FormularioEditarCard></FormularioEditarCard>
+                  </Dialog>
+                  <button className='botao-excluir' onClick={() => excluirCard(card.id)}> 
+                    <Trash2 size={20} color="#eae8ee" /></button>
+                </div>
+              </div>
               <p>Empresa: {card.empresa}</p>
               <p>Cargo: {card.vaga.nome}</p>
               <p>Senoridade: {card.senoridade.nome}</p>

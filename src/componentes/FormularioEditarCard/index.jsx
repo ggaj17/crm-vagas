@@ -4,13 +4,14 @@ import { Titulo } from '../Titulo'
 import { CampoEntrada } from '../CampoEntrada'
 import { Botao } from '../Botao'
 import { ListaSuspensa } from '../ListaSuspensa';
-import './formulario-crm.estilo.css'
+import './formulario-editar-card.estilo.css'
 
-export function FormularioCRM ({vagas, senoridade, tipo, dias, etapa, tipoSelecionado, setTipoSelecionado, aoFormularioSubmetido}) {
+export function FormularioEditarCard ({vagas, senoridade, tipo, dias, etapa, tipoSelecionado, setTipoSelecionado, aoFormularioSubmetido}) {
 
   return (
     <form action={aoFormularioSubmetido} className='form-crm'>
-        <CampoFormulario>
+        {/* TEM QUE FAZER!! */}
+        {/* <CampoFormulario>
         <Titulo>Preencha para criar um Card para o CRM</Titulo>
         <div className='container-form'>
             <div className='itens-form'>
@@ -46,7 +47,7 @@ export function FormularioCRM ({vagas, senoridade, tipo, dias, etapa, tipoSeleci
             </div>
             <Botao>Adicionar Vaga</Botao>
         </div>
-        </CampoFormulario>
+        </CampoFormulario> */}
     </form>
   )
 }
