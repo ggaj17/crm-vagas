@@ -12,11 +12,14 @@ function App() {
   const dialogEditRef = useRef(null);
   const idRef = useRef(1); //Gerador de IDS apenas enquanto não tiver backend
 
-  console.log(cards)
-
   function addCards (card) {
     setCards([...cards, card]);
     idRef.current ++
+  }
+  
+  //logica basica e interessante pra trocar o card antigo pelo novo apenas pelo frontend.
+  function updateCard (card) {
+    setCards(prevCards => prevCards.map(c => c.id === card.id ? card : c));
   }
 
   const excluirCard = (id) => {
@@ -25,10 +28,14 @@ function App() {
   }
 
   function aoFormularioSubmetido (formData) {
+
+    let idCard = formData.get('id');
+    idCard = idCard == '' ? idRef.current : parseInt(idCard);
+
     //formData é o valor padrão do formulario ao ser submetido.
     //Deixei da forma mais verbosa e também reduzida de selecionar um objeto com o select para ter as duas opcoes como exemplos posteriores. O ideal nesse caso sempre será pelo ID!! TROCAR!!! Elevar o estado do card tambem
       const card = {
-        id: idRef.current,
+        id: idCard,
         nome: formData.get('nome') || 'Nome Indefinido',
         empresa: formData.get('empresa') || 'Empresa Indefinida',
         vaga: vagas.find(function(vaga) {
@@ -44,9 +51,9 @@ function App() {
         data_criacao_card: new Date().toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'}),
           deadline: formData.get('data').split('-').reverse().join('/') || '31/12/2026'// forma interessante de transformar a data do formato yyyy-mm-dd para dd/mm/yyyy
       }
-      
-      addCards(card);
+      formData.get('acao') === 'adicionar' ? addCards(card) : updateCard(card);
       dialogAddRef.current?.fechar();
+      dialogEditRef.current?.fechar();
    }
   
   const vagas = [
@@ -169,17 +176,31 @@ function App() {
           titulo={'Adicionar Cards'}>
             <FormularioCRM
                     vagas={vagas}
+                    valorVaga={{}}
                     senoridade={senoridade}
+                    valorSenoridade={{}}
                     tipo={tipo}
+                    valorTipo={{}}
                     dias={dias}
+                    valorDias={{}}
                     etapa={etapa}
+                    valorEtapa={{}}
                     tipoSelecionado={tipoSelecionado}
                     setTipoSelecionado={setTipoSelecionado}
                     aoFormularioSubmetido={aoFormularioSubmetido}
+                    acao={'adicionar'}
                 />
           </Dialog>
         </div>
-        <ListaCards cards={cards} excluirCard={excluirCard} ref={dialogEditRef}/>
+        <ListaCards cards={cards} excluirCard={excluirCard} ref={dialogEditRef} 
+         setTipoSelecionado={setTipoSelecionado}
+         aoFormularioSubmetido={aoFormularioSubmetido}
+         vagas={vagas}
+         senoridade={senoridade}
+         tipo={tipo}
+         dias={dias}
+         etapa={etapa}
+         tipoSelecionado={tipoSelecionado}/>
     </main>
   )
 }
