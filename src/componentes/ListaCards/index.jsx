@@ -50,7 +50,6 @@ export function ListaCards({
         </div>
       ))}
 
-      {/* DIÁLOGO DE EDIÇÃO - UM ÚNICO FORA DO MAP, MAS CONTROLADO PELO cardEditando */}
       {cardEditando && (
         <Dialog
           isOpen={true}
