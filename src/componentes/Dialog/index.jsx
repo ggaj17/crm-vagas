@@ -23,6 +23,19 @@ export function Dialog({children, ref, titulo, isOpen = false, onClose}) {
         }
     }, [isOpen]);
 
+    useEffect(() => {
+        const dialogElement = dialogRef.current;
+        
+        if (dialogElement) {
+            const handleCancel = (e) => {
+                e.preventDefault();
+                closeDialog();
+            };
+            dialogElement.addEventListener('cancel', handleCancel);
+            return () => dialogElement.removeEventListener('cancel', handleCancel);
+        }
+    }, []);
+
     return (
         <dialog ref={dialogRef}>
             <button autoFocus className='botao-fechar' onClick={closeDialog}>X</button>
