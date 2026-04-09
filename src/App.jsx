@@ -93,8 +93,8 @@ function App() {
     <main>
       <div className='titulo'>
         <span className='titulo-projeto'>Projeto CRM Vagas</span>
-        <button onClick={() => setIsOpenAdd(true)}>Adicionar Cards</button>
-        <Dialog isOpen={isOpenAdd} onClose={() => setIsOpenAdd(false)} titulo={'Adicionar Cards'}>
+        <button onClick={() => setIsOpenAdd(true)}>Nova vaga</button>
+        <Dialog isOpen={isOpenAdd} onClose={() => setIsOpenAdd(false)} titulo={'Nova vaga'}>
           <FormularioCRM
             vagas={vagas}
             senoridade={senoridade}
@@ -111,15 +111,6 @@ function App() {
 
       <ListaCards
         cards={cards}
-        excluirCard={excluirCard}
-        aoFormularioSubmetido={aoFormularioSubmetido}
-        vagas={vagas}
-        senoridade={senoridade}
-        tipo={tipo}
-        dias={dias}
-        etapa={etapa}
-        tipoSelecionado={tipoSelecionado}
-        setTipoSelecionado={setTipoSelecionado}
       />
     </main>
   )
